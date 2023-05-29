@@ -11,18 +11,34 @@ submarine = 3
 patrol_boat = 2
 
 #Board
-alphabet = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
-
 def show_board(size):
+    
     header = []
     board  = [header]
     for i in range(size):
-        header.append("    " + alphabet[i])
+        header.append("    " + str(i+1))
     for i in range(size):
-        i += 1
-        board.append(str(i) +("[ ]"*size))
+        board.append(str(i+1) +("[ ]"*size))
     for row in board:
         print((" ").join(row))
 
 show_board(9)
+
+#Ship spawn
+def spawn_ship(size, orientation, row, col):
+    ship_len = size
+    ship_orientation = orientation
+    if ship_orientation == 0:
+        ship_row = [row-1]*size
+        ship_col = (col-1)
+        col_range = list(range(ship_col,ship_col + ship_len))
+        cor = tuple(zip(ship_row, col_range))
+    else:
+        ship_col = [col-1]*size
+        ship_row = (row-1)
+        row_range = list(range(ship_row,ship_row + ship_len))
+        cor = tuple(zip(ship_col, row_range))
+    print(list(cor))
+
+ship = spawn_ship(3, 1, 2, 4); ship
 
