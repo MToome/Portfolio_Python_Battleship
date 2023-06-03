@@ -27,11 +27,11 @@ def show_board(size):
         print((" ").join(row))
 """
 def build_board(dims):
-    return [['O' for count in range(dims)] for count in range(dims)]
+    return [['O' for _ in range(dims)] for _ in range(dims)]
 
 def print_board(board):
-    for b in board:
-        print(*b)
+    for row in board:
+        print(*row)
 
 #Ship spawn
 """
@@ -51,26 +51,24 @@ def spawn_ship(size, orientation, row, col):
         cor = tuple(zip(ship_col, row_range))
     return list(cor)
 """
-def spawn_ship(size):
+def spawn_ship(size, dims):
     ship_len = random.randint(1,size)
     ship_orientation = random.randint(0,1)
     if ship_orientation == 0:
-        ship_row = [random.randint(0, size-1)]*size
-        ship_col = random.randint(0, size - ship_len)
-        col_range = list(range(ship_col,ship_col + ship_len))
-        cor = tuple(zip(ship_row, col_range))
+        ship_row = [random.randint(0, dims-1)] * ship_len
+        ship_col = random.randint(0, dims - ship_len)
+        cor = list(zip(ship_row, range(ship_col, ship_col + ship_len)))
     else:
-        ship_col = [random.randint(0, size-1)]*size
+        ship_col = [random.randint(0, dims-1)]* ship_len
         ship_row = random.randint(0, size - ship_len)
-        row_range = list(range(ship_row,ship_row + ship_len))
-        cor = tuple(zip(ship_col, row_range))
-    return list(cor)
+        cor = list(zip(ship_col, range(ship_row, ship_row + ship_len)))
+    return cor
 
 #Guessing
 def player_shoot():    
     shoot_col = int(input("Col: ")) - 1
     shoot_row = int(input("Row:")) - 1
-    return [shoot_col, shoot_row]
+    return [shoot_row, shoot_col]
 
 
 
@@ -78,25 +76,23 @@ def player_shoot():
 def update(guess, board, ship, guess_list):
     if guess in guess_list:
         print("You allready shot their")
-        return board
     elif guess in ship:
         print("Direct hit")
-        board[guess[0]][guess[1]] ="X"
+        board[guess[0]][guess[1]] = "X"
         ship.remove(guess)
-        return board
     else:
         print("Missed")
-        board[guess[0]][guess[1]] ="-"
+        board[guess[0]][guess[1]] = "-"
         guess_list.append(guess)
-        return board
+    return board
 
 board_size = build_board(9)
-board = print_board(board_size)
+print_board(board_size)
 
-cruiser = spawn_ship(3)    
+cruiser = spawn_ship(3, len(board_size))    
 
 guess_list = []
 player_guess = player_shoot()
-board = update(player_guess, board, cruiser, guess_list)
-print(board)
+board_size = update(player_guess, board_size, cruiser, guess_list)
+print_board(board_size)
 
