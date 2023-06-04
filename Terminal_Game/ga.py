@@ -52,50 +52,51 @@ def spawn_ship(size, orientation, row, col):
     return list(cor)
 """
 def spawn_ship(dims):
-    ship_len = random.randint(1,dims)
-    ship_orientation = random.randint(0,1)
+    ship_len = random.randint(1, dims)
+    ship_orientation = random.randint(0, 1)
     if ship_orientation == 0:
-        ship_row = [random.randint(0, dims-1)] * ship_len
+        ship_row = random.randint(0, dims - 1)
         ship_col = random.randint(0, dims - ship_len)
-        cor = list(zip(ship_row, range(ship_col, ship_col + ship_len)))
+        cor = list(zip(range(ship_row, ship_row + ship_len), range(ship_col, ship_col + ship_len)))
     else:
-        ship_col = [random.randint(0, dims-1)]* ship_len
+        ship_col = random.randint(0, dims - 1)
         ship_row = random.randint(0, dims - ship_len)
-        cor = list(zip(ship_col, range(ship_row, ship_row + ship_len)))
+        cor = list(zip(range(ship_row, ship_row + ship_len), [ship_col] * ship_len))
     return cor
 
+
 #Guessing
-def player_shoot():    
-    while(True):
-        shoot_col = input("Col: ") 
-        if shoot_col == "exit":
+def player_shoot():
+    while True:
+        shoot_col = input("Col: ")
+        if shoot_col.lower() == "exit":
             exit()
         try:
             int(shoot_col)
         except:
-            print("Please enter a number without a decimel")
+            print("Please enter a number without a decimal.")
             continue
-        if int(shoot_col) > 4 or int(shoot_col) < 1:
-            print("Please, enter number in the board.")
+        if int(shoot_col) > len(board) - 1 or int(shoot_col) < 1:
+            print("Please enter a number within the board range.")
             continue
         else:
             break
-    while(True):   
-        shoot_row = input("Row:")
+    while True:
+        shoot_row = input("Row: ")
         if shoot_row.lower() == "exit":
             exit()
         try:
             int(shoot_row)
         except:
-            print("Please enter a number without a decimel")
+            print("Please enter a number without a decimal.")
             continue
-        if int(shoot_row) > 5 or int(shoot_row) < 1:
-            print("Please, enter number in the board.")
-            shoot_row = input("Row:")
-            exit()
+        if int(shoot_row) > len(board) - 1 or int(shoot_row) < 1:
+            print("Please enter a number within the board range.")
+            continue
         else:
             break
-    return [int(shoot_row)- 1, int(shoot_col) - 1]
+    return [int(shoot_row) - 1, int(shoot_col) - 1]
+
 
 
 
