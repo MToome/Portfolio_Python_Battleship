@@ -66,9 +66,36 @@ def spawn_ship(size, dims):
 
 #Guessing
 def player_shoot():    
-    shoot_col = int(input("Col: ")) - 1
-    shoot_row = int(input("Row:")) - 1
-    return [shoot_row, shoot_col]
+    while(True):
+        shoot_col = input("Col: ") 
+        if shoot_col == "exit":
+            exit()
+        try:
+            int(shoot_col)
+        except:
+            print("Please enter a number without a decimel")
+            continue
+        if int(shoot_col) > how_big or int(shoot_col) < 1:
+            print("Please, enter number in the board.")
+            continue
+        else:
+            break
+    while(True):   
+        shoot_row = input("Row:")
+        if shoot_row.lower() == "exit":
+            exit()
+        try:
+            int(shoot_row)
+        except:
+            print("Please enter a number without a decimel")
+            continue
+        if int(shoot_row) > how_big or int(shoot_row) < 1:
+            print("Please, enter number in the board.")
+            shoot_row = input("Row:")
+            exit()
+        else:
+            break
+    return [int(shoot_row)- 1, int(shoot_col) - 1]
 
 
 
@@ -86,13 +113,25 @@ def update(guess, board, ship, guess_list):
         guess_list.append(guess)
     return board
 
-board_size = build_board(9)
-print_board(board_size)
 
-cruiser = spawn_ship(3, len(board_size))    
 
-guess_list = []
-player_guess = player_shoot()
-board_size = update(player_guess, board_size, cruiser, guess_list)
-print_board(board_size)
 
+def start_message():
+    print("Get ready for battle")
+    print("Let's sink a ship!!!")
+
+def main(how_hard):
+    start_message()
+    board_size = build_board(how_hard)
+    print_board(board_size)
+    cruiser = spawn_ship(how_hard / 3, len(board_size))    
+    guess_list = []
+    while len(cruiser) > 0:
+        player_guess = player_shoot()
+        board_size = update(player_guess, board_size, cruiser, guess_list)
+        print_board(board_size)
+    print("Congrats you sunk the ship")
+    return
+
+how_big = int(input("Enter board size:"))
+main(how_big)
