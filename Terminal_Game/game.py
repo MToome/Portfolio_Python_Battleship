@@ -75,7 +75,7 @@ def player_shoot():
         except:
             print("Please enter a number without a decimel")
             continue
-        if int(shoot_col) > 4 or int(shoot_col) < 1:
+        if int(shoot_col) > len(board_size) or int(shoot_col) < 1:
             print("Please, enter number in the board.")
             continue
         else:
@@ -89,13 +89,12 @@ def player_shoot():
         except:
             print("Please enter a number without a decimel")
             continue
-        if int(shoot_row) > 5 or int(shoot_row) < 1:
+        if int(shoot_row) > len(board_size) or int(shoot_row) < 1:
             print("Please, enter number in the board.")
-            shoot_row = input("Row:")
-            exit()
+            continue
         else:
             break
-    return [int(shoot_row)- 1, int(shoot_col) - 1]
+    return (int(shoot_row)- 1, int(shoot_col) - 1)
 
 
 
@@ -113,8 +112,7 @@ def update(guess, board, ship, guess_list):
         guess_list.append(guess)
     return board
 
-
-
+board_size = build_board(4)
 
 def start_message():
     print("Get ready for battle")
@@ -122,13 +120,13 @@ def start_message():
 
 def main():
     start_message()
-    board_size = build_board(4)
+    b = board_size
     print_board(board_size)
-    cruiser = spawn_ship(len(board_size))    
+    cruiser = spawn_ship(len(board_size))  
     guess_list = []
     while len(cruiser) > 0:
         player_guess = player_shoot()
-        board_size = update(player_guess, board_size, cruiser, guess_list)
+        b = update(player_guess, b, cruiser, guess_list)
         print_board(board_size)
     print("Congrats you sunk the ship")
     return
