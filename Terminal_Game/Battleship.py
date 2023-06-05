@@ -61,7 +61,7 @@ def spawn_ship(dims):
     else:
         ship_col = [random.randint(0, dims-1)]* ship_len
         ship_row = random.randint(0, dims - ship_len)
-        cor = list(zip(ship_col, range(ship_row, ship_row + ship_len)))
+        cor = list(zip(range(ship_row, ship_row + ship_len, ship_col)))
     return cor
 
 #Guessing
@@ -129,7 +129,11 @@ def main():
         b = update(player_guess, b, cruiser, guess_list)
         print_board(board_size)
     print("Congrats you sunk the ship")
-    return
-
+    game_continues = input("do you want to try again?")
+    if game_continues.lower() == "yes":
+        guess_list.clear()
+        main()
+    else:
+        return
 
 main()
