@@ -129,11 +129,6 @@ def main():
         b = update(player_guess, b, cruiser, guess_list)
         print_board(board_size)
     print("Congrats you sunk the ship")
-    game_continues = input("do you want to try again?")
-    if game_continues.lower() == "yes":
-        guess_list.clear()
-        main()
-    else:
-        return
+    return
 
 main()
