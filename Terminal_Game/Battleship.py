@@ -22,24 +22,37 @@ def spawn_ship(dims):
     ship_orientation = random.randint(0,1)
     # Checks if the orientation is 0 then it generates the random location
     if ship_orientation == 0:
-        # Selects the row for the ship randomly between 0 and inputed dims size - 1, then multyples it to 
+        # Selects the row for the ship randomly between 0 and inputed dims size - 1, then multyples it to ship length list
         ship_row = [random.randint(0, dims-1)] * ship_len
+        # Pick the first cordinate for the ship, have to subtrack the ship lenght to make sure the ship would not go off board
         ship_col = random.randint(0, dims - ship_len)
+        # Zip combines the ship_row and ship cord, list makes it to list 
         cor = list(zip(ship_row, range(ship_col, ship_col + ship_len)))
+    # If the orientation is not 0 it will do the following
     else:
+        # Selects the row for the ship randomly between 0 and inputed dims size - 1, then multyples it to ship length list
         ship_col = [random.randint(0, dims-1)]* ship_len
+        # Pick the first cordinate for the ship, have to subtrack the ship lenght to make sure the ship would not go off board
         ship_row = random.randint(0, dims - ship_len)
+        # Zip combines the ship_row and ship cord, list makes it to list
         cor = list(zip(range(ship_row, ship_row + ship_len), ship_col))
+    # Returns the cordinates
     return cor
 
 #Guessing
 #This is for guessing where the ship is, also their is exit function in it and breaking protection from entering letters or to high or low number.
 def player_shoot():    
-    while(True):
+    # As long as the value is True this loop will run
+    while True:
+        # User input is asked
         shoot_col = input("Col: ") 
+        # If user input is "exit" it will end the game
         if shoot_col == "exit":
+            # Built in exit function
             exit()
+        # This try helps to prevent game blowing up
         try:
+            # Turns user input intu intiger
             int(shoot_col)
         except:
             print("Please enter a number without a decimel")
