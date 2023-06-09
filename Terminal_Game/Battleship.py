@@ -52,17 +52,26 @@ def player_shoot():
             exit()
         # This try helps to prevent game blowing up
         try:
-            # Turns user input intu intiger
+            # Turns user input into integer
             int(shoot_col)
+        # If try fails does this
         except:
+            # Shows this
             print("Please enter a number without a decimel")
+            # restarts the loop
             continue
+        # When input is higher the board size or lower then 1 
         if int(shoot_col) > len(board_size) or int(shoot_col) < 1:
+            # It shows this
             print("Please, enter number in the board.")
+            # And restarts the loop
             continue
+        # If the input will pass all failsafe
         else:
+            # It ends the loop
             break
-    while(True):   
+    # Same as shoot_col
+    while True:   
         shoot_row = input("Row:")
         if shoot_row.lower() == "exit":
             exit()
@@ -76,6 +85,7 @@ def player_shoot():
             continue
         else:
             break
+    # This ends the function and returns the input reduced by one because python starts counting at 0
     return (int(shoot_row)- 1, int(shoot_col) - 1)
 
 
@@ -83,16 +93,27 @@ def player_shoot():
 #Updating
 #Changing the board, showing where have been shot and where the ship has been hit.
 def update(guess, board, ship, guess_list):
+    # Checks if the guess player made is allready made and if it is
     if guess in guess_list:
+        # it shows this text
         print("You allready shot their")
+    # When player hits the ship
     elif guess in ship:
+        # Shows this text
         print("Direct hit")
+        # Enters X in the board
         board[guess[0]][guess[1]] = "X"
+        # Removes the location from the ship list
         ship.remove(guess)
+    # When if and elif is not triggered
     else:
+        # Shows this text
         print("Missed")
+        # Enters - to the board
         board[guess[0]][guess[1]] = "-"
+        # Enters the guess to the guess_list
         guess_list.append(guess)
+    # Ends the functin and returns the updated board
     return board
 
 #Defining the board size
@@ -128,4 +149,5 @@ def main():
     #Gives the valuse and ends the function
     return
 
+# Calls the function
 main()
