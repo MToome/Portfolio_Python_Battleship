@@ -46,8 +46,8 @@ def player_shoot():
     while True:
         # User input is asked
         shoot_col = input("Col: ") 
-        # If user input is "exit" it will end the game
-        if shoot_col == "exit":
+        # If user input is "exit" it will end the game, .lower() is fail safe for if user has caps lock on
+        if shoot_col.lower() == "exit" or shoot_col.lower() == "q":
             # Built in exit function
             exit()
         # This try helps to prevent game blowing up
@@ -73,7 +73,7 @@ def player_shoot():
     # Same as shoot_col
     while True:   
         shoot_row = input("Row:")
-        if shoot_row.lower() == "exit":
+        if shoot_row.lower() == "exit" or shoot_row.lower() == "q":
             exit()
         try:
             int(shoot_row)
