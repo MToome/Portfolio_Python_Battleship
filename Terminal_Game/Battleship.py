@@ -112,42 +112,57 @@ def update(guess, board, ship, guess_list):
         # Enters - to the board
         board[guess[0]][guess[1]] = "-"
         # Enters the guess to the guess_list
-        guess_list.append(guess)
+    guess_list.append(guess)
     # Ends the functin and returns the updated board
     return board
 
 #Defining the board size
 board_size = build_board(4)
 
-#Starting message
-#Prints something when starting the game
+# Starting message
+# Prints something when starting the game
 def start_message():
     print("Get ready for battle")
     print("Let's sink a ship!!!")
 
-#This is function where all is but toghether
+# This function combines it all
 def main():
-    start_message()
-    #Prints the board previously defined
-    b = board_size
-    #Shows the board
-    print_board(board_size)
-    #Generats the ship
-    cruiser = spawn_ship(len(board_size))  
-    #Empty list where values are store after guessing
-    guess_list = []
-    #Game end is defined, if the ship lenght is 0 game ends, until then it cycles
-    while len(cruiser) > 0:
-        #calls the guessing function
-        player_guess = player_shoot()
-        #Changes the board and checking the ship location
-        b = update(player_guess, b, cruiser, guess_list)
-        #Shows the board
+    while True:
+        start_message()
+        # Prints the board previously defined
+        b = board_size
+        # Shows the board
         print_board(board_size)
-    #Prints after cycle has ended
-    print("Congrats you sunk the ship")
-    #Gives the valuse and ends the function
-    return
+        # Generats the ship
+        cruiser = spawn_ship(len(board_size))  
+        # Empty list where values are store after guessing
+        guess_list = []
+        # Game end is defined, if the ship lenght is 0 game ends, until then it cycles
+        while len(cruiser) > 0:
+            # Calls the guessing function
+            player_guess = player_shoot()
+            # Changes the board and checking the ship location
+            b = update(player_guess, b, cruiser, guess_list)
+            # Shows the board
+            print_board(board_size)
+        # Prints after cycle has ended
+        print("Congrats you sunk the ship")
+        # Asks the player input if the player wants  to play again
+        game_restart = input("Do you want to play again? y or n : ")
+        # .lower() makes the ansewr lower case and the it checks if it is y
+        if game_restart.lower() == "y":
+            # If it is y loop will run as many times as their was guesses
+            for i in range(len(guess_list)):
+                # Num gets the valu of one guess, row and column
+                num = guess_list[i]
+                # This changes all the hits and miss markers to O, their would be a clean board again
+                board_size[num[0]][num[1]] = "O"
+            # Emptys the guess list
+            guess_list.clear()
+            # Starts the main function again
+            continue
+        # Ends the function
+        return
 
 # Calls the function
 main()
